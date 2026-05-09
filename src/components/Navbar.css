@@ -2,3 +2,13 @@
     height: 180px !important;
     width: 270px !important;
 }
+ul {
+    list-style: none;
+    padding-left: 0;
+}
+.dropdown-item:active,
+.dropdown-item:focus {
+    background-color: transparent !important;
+    color: inherit !important;
+    box-shadow: none !important;
+}

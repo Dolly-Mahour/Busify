@@ -229,7 +229,9 @@ input {
   border-radius: 15px;
   border: none;
 }
-
+.dropdown-toggle::after {
+    display: none !important;
+}
 /* ===================== SEARCH ===================== */
 
 .search-box {
