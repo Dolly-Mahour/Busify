@@ -7,16 +7,16 @@ export default function Footer() {
         <div className="d-flex justify-content-center">
           <Logo></Logo>
         </div>
-        <div className="d-flex justify-content-around align-items-center px-5 py-3">
-          <div className="d-flex justfy-content-center align-items-center">
+        <div className="d-flex row g-0 justify-content-around align-items-center px-5 py-3">
+          <div className="center-div my-2 col-lg-4 col-ms-4 col-sm-12">
             <img className="h-20px" src="../images/email.png" alt="email" />
             <p>hello@probusify.com</p>
           </div>
-          <div className="d-flex justfy-content-center align-items-center">
+          <div className="center-div my-2 col-lg-4 col-ms-4 col-sm-12">
             <img className="h-20px" src="../images/phone.png" alt="call" />
             <p>+91 98475984558</p>
           </div>
-          <div className="d-flex justfy-content-center align-items-center">
+          <div className="center-div my-2 col-lg-4 col-ms-4 col-sm-12">
             <img className="h-20px" src="../images/location.png" alt="map" />
             <p>India</p>
           </div>

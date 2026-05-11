@@ -117,7 +117,7 @@ export default function Navbar() {
                           <div className="center-div">
                             <Logo></Logo>
                           </div>
-                          <h3 className="center-div fst-italic py-2">Lgoin</h3>
+                          <h3 className="center-div fst-italic py-2">Login</h3>
                           <DotLottieReact
                             src="https://lottie.host/14273cfb-afce-4097-97ba-e66ec31c8b2b/jkgwm3q4Hl.json"
                             loop
@@ -165,7 +165,7 @@ export default function Navbar() {
                       alt="menu"
                     />
                   </a>
-                  <ul className="dropdown-menu dropdown-menu-end">
+                  <ul className="dropdown-menu dropdown-menu-end rounded-4">
                     <li>
                       <a
                         className="dropdown-item d-flex  align-items-center justify-content-between"

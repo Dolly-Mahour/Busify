@@ -233,7 +233,9 @@ input {
     display: none !important;
 }
 /* ===================== SEARCH ===================== */
-
+p{
+  margin-bottom: 0 !important;
+}
 .search-box {
   background-color: var(--color-primary);
   border-radius: 10px;

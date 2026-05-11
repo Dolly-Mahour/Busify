@@ -61,7 +61,7 @@ export default function NavbarItems() {
             <img className="h-20px" src="../images/earth.png" alt="" />
             <p className="align-items-center d-flex ms-3">Languages</p>
           </a>
-          <ul className="dropdown-menu">
+          <ul className="dropdown-menu rounded-4">
             {flags.map((flag, index) => (
               <li>
                 <a

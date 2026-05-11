@@ -4,3 +4,11 @@
     background-repeat: no-repeat;
     
 }
+.bannerText{
+    color: black;
+}
+@media screen and (max-width: 768px) {
+  .bannerText{
+    color: white !important;
+  }
+}
