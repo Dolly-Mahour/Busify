@@ -1,21 +1,40 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 import Car from "./components/Component1.jsx";
 import Navbar from "./components/Navbar.jsx";
 import Footer from "./components/Footer.jsx";
 import Banner from "./components/Banner.jsx";
-import AddsCarousel from "./components/AddsCarousel.jsx"
+import Home from "./components/Home.jsx";
+import Profile from "./components/Profile.jsx";
+import { Routes,Route,Router, BrowserRouter } from "react-router-dom";
+import AddsCarousel from "./components/AddsCarousel.jsx";
+import PrivacyPolicy from "./components/PrivacyPolicy.jsx";
+import TermAndConditions from "./components/TermsAndConditions.jsx";
+import ContactUs from "./components/ContactUs.jsx";
+import CancellationPolicy from "./components/CancellationPolicy.jsx";
 function App() {
-  const [count, setCount] = useState(0);
-
+  const currentTheme = localStorage.getItem("currentTheme");
+  const [theme, setTheme] = useState(currentTheme);
+  useEffect(() => {
+    localStorage.setItem("currentTheme", theme);
+  }, [theme]);
   return (
     <>
-      <div className="h-100">
-        <Navbar></Navbar>
-        <Banner></Banner>
-        <AddsCarousel></AddsCarousel>
-        <Footer></Footer>
+      <BrowserRouter>
+      <div className={`h-100 ${theme}`}>
+        <Navbar theme={theme} setTheme={setTheme}></Navbar>
+        <Routes>
+          <Route path="/" element={<Home theme={theme} setTheme={setTheme}></Home>}></Route>
+          <Route path="/privacypolicy" element={<PrivacyPolicy theme={theme} ></PrivacyPolicy>}></Route>
+          <Route path="/termandconditions" element={<TermAndConditions theme={theme} ></TermAndConditions>}></Route>
+          <Route path="/contactus" element={<ContactUs theme={theme} ></ContactUs>}></Route>
+          <Route path="/profile" element={<Profile theme={theme} ></Profile>}></Route>
+          <Route path="/cancellationpolicy" element={<CancellationPolicy theme={theme} ></CancellationPolicy>}></Route>
+        </Routes>
+        <Footer theme={theme} setTheme={setTheme}></Footer>
       </div>
+      </BrowserRouter>
     </>
   );
 }

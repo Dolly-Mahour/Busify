@@ -1,24 +1,24 @@
 import Logo from "./Logo";
 
-export default function Footer() {
+export default function Footer({theme,setTheme}) {
   return (
     <>
-      <div className="w-100">
-        <div className="d-flex justify-content-center">
-          <Logo></Logo>
+      <div className={`w-100 ${theme}`}>
+        <div className="d-flex justify-content-center pt-3">
+          <Logo theme={theme}></Logo>
         </div>
         <div className="d-flex row g-0 justify-content-around align-items-center px-5 py-3">
           <div className="center-div my-2 col-lg-4 col-ms-4 col-sm-12">
             <img className="h-20px" src="../images/email.png" alt="email" />
-            <p>hello@probusify.com</p>
+            <a className="text-decoration-none ms-2 footer-contact-text" href="mailto:dollymahour52@gmail.com">hello@probusify.com</a>
           </div>
           <div className="center-div my-2 col-lg-4 col-ms-4 col-sm-12">
             <img className="h-20px" src="../images/phone.png" alt="call" />
-            <p>+91 98475984558</p>
+            <a className="text-decoration-none ms-2 footer-contact-text" href="tel:+918882538764">+91 92xxxxxxx0</a>
           </div>
           <div className="center-div my-2 col-lg-4 col-ms-4 col-sm-12">
             <img className="h-20px" src="../images/location.png" alt="map" />
-            <p>India</p>
+            <a className="text-decoration-none ms-2 footer-contact-text" href="https://maps.google.com/">India</a>
           </div>
         </div>
         <hr />

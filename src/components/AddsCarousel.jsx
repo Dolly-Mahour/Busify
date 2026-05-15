@@ -11,7 +11,7 @@ class carouselSlides {
     this.fontBtnColor = fontBtnColor;
   }
 }
-export default function AddsCarousel() {
+export default function AddsCarousel({theme,setTheme}) {
   const slides = [
     new carouselSlides(
       "Travel Made Easy",
@@ -51,16 +51,16 @@ export default function AddsCarousel() {
     ),
   ];
   return (
-    <div className="container-fluid g-0 py-5 text-center">
-      <div className="px-5 pb-5">
+    <div className={`container-fluid g-0 py-5 text-center ${theme}`} >
+      <div className="px-5 py-5">
         <h1 className="fw-bold fst-italic">
           Enjoy your travel experience with us
         </h1>
-        <h5 className="py-2 text-body-tertiary fst-italic">
+        <h5 className="py-2 fst-italic">
           Book your adventure, pack your bags and let the exploration begin
         </h5>
       </div>
-      <div className="px-4">
+      <div className="px-4 text-black">
         <Swiper
           modules={[Autoplay]}
           spaceBetween={20}

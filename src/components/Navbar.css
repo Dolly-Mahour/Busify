@@ -6,9 +6,50 @@ ul {
     list-style: none;
     padding-left: 0;
 }
+.navItemsWidth{
+    width: 50% ;
+}
+.navbar{
+    background: var(--bg-color);
+    color: var(--text-color);
+}
+.modal-body{
+    background: var(--bg-color);
+    color: var(--text-color);
+}
+input{
+    color: var(--text-color);
+}
+.custom-border{
+    border: 1px solid !important;
+    border-color: var(--border-color);
+}
+.dropdown-menu{
+    background: var(--bg-color) !important;
+    color: var(--text-color) !important;
+}
+.dropdown-item{
+    color: var(--text-color) !important;
+}
+.dropdown-item:hover{
+    background-color: rgba(128, 128, 128, 0.436) !important;
+    color: var(--text-color) !important;
+}
+.login-button{
+    background: var(--button-bg) !important;
+}
 .dropdown-item:active,
 .dropdown-item:focus {
     background-color: transparent !important;
     color: inherit !important;
     box-shadow: none !important;
+}
+.profile-icon{
+    height: 45px;
+    width: 45px;
+}
+@media (max-width:568px) {
+    .navItemsWidth{
+    width: 60% ;
+}
 }

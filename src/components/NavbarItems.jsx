@@ -8,7 +8,7 @@ class FlagList {
   }
 }
 
-export default function NavbarItems() {
+export default function NavbarItems({theme}) {
   const flags = [
     new FlagList("Hindi", "../images/flag.png"),
     new FlagList("English", "../images/united-kingdom.png"),
@@ -27,7 +27,9 @@ export default function NavbarItems() {
             data-bs-toggle="dropdown"
             aria-expanded="false"
           >
-            <img className="h-20px" src="../images/download.png" alt="" />
+            <img className="h-20px" src={
+              theme == "light" ? "../images/download.png":"../images/download-white.png"
+            } alt="" />
             <p className="align-items-center d-flex ms-3">Download</p>
           </a>
           <div className="dropdown-menu downloadDropdown rounded-4 p-2">
@@ -58,7 +60,9 @@ export default function NavbarItems() {
             data-bs-toggle="dropdown"
             aria-expanded="false"
           >
-            <img className="h-20px" src="../images/earth.png" alt="" />
+            <img className="h-20px" src={
+              theme == "light" ? "../images/earth.png":"../images/earth-white.png"
+            } alt="" />
             <p className="align-items-center d-flex ms-3">Languages</p>
           </a>
           <ul className="dropdown-menu rounded-4">

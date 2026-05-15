@@ -4,11 +4,29 @@
     background-repeat: no-repeat;
     
 }
+.card-border-end{
+    border-right: 2px solid rgb(207, 200, 200) !important;
+}
+@media (max-width:568px){
+  .bannerBgImage{
+    background-image: url('../images/bg-banner-image-small.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    
+}
+
+.card-border-end{
+    border-right: none !important;
+    border: none !important;
+}
+}
 .bannerText{
     color: black;
 }
-@media screen and (max-width: 768px) {
-  .bannerText{
-    color: white !important;
-  }
+.banner-button{
+    background-color: #ed9c1f;
+    color: white;
+}
+select{
+  color: var(--text-color);
 }

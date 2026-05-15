@@ -1,37 +1,8 @@
-/* ===================== THEME VARIABLES ===================== */
-
-/* LIGHT THEME */
-:root {
-  --color-bg: white;
-  --color-text: black;
-  --color-primary: #8070d2;
-  --color-secondary: #975764;
-  --color-dark: #292952;
-  --color-grey: grey;
-
-  --modal-bg: white;
-  --banner-bg: #8070d2;
-}
-
-/* DARK THEME */
-[data-theme="dark"] {
-  --color-bg: #292952;
-  --color-text: white;
-  --color-primary: #8070d2;
-  --color-secondary: #b8814d;
-  --color-dark: white;
-  --color-grey: #d0cccc;
-
-  --modal-bg: #292952;
-}
 
 /* ===================== GLOBAL ===================== */
 
 body {
-  background-color: var(--color-bg);
-  color: var(--color-text);
   height: 100vh;
-  /* width: 100vw; */
 }
 /* HEIGHT UTILITIES IN % (SAFE) */
 
@@ -71,98 +42,45 @@ body {
 .w-95 { width: 95%; }
 
 p {
-  margin: 0;
-  color: var(--color-text);
+  margin-bottom: 0 !important;
 }
 .card-overlay {
   position: relative;
-  top: -50px; 
+  top: -20px; 
   z-index: 10;
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+}
+select:focus-visible {
+  outline: none !important;
+}
+
+select:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+select {
+  border: none !important;
+  box-shadow: none !important;
+
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
 }
 input {
   background: transparent;
   border: none;
   outline: none;
-  color: var(--color-text);
 }
 
 ::placeholder {
-  color: var(--color-grey);
+  color: #6c6d6de2;
 }
 
-/* ===================== UTILITIES ===================== */
-
-.center {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.footer-contact-text{
+  color: var(--text-color);
 }
-
-.margin-t {
-  margin-top: 50px;
-}
-
-.grey-text {
-  color: var(--color-grey);
-}
-
-.white-text {
-  color: white;
-}
-
-/* ===================== NAVBAR ===================== */
-
-#navbar {
-  background-color: var(--color-bg);
-  height: 12%;
-}
-
-#logo {
-  font-size: 25px;
-  font-weight: bold;
-  font-family: cursive;
-  color: var(--color-primary);
-}
-
-/* ===================== BANNER ===================== */
-
-#banner {
-  height: 70%;
-  background-color: var(--banner-bg);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.banner-text {
-  text-align: center;
-  font-weight: bold;
-}
-
-.banner-btn {
-  background-color: #a69ae3;
-  color: white;
-  border-radius: 20px;
-  border: none;
-}
-
-/* ===================== CARD ===================== */
-
-.card {
-  width: 90%;
-  border-radius: 20px;
-  background-color: var(--color-bg);
-  border: 1px solid #ddd;
-}
-
-.input-box {
-  border: 1px solid #ddd;
-  height: 40px;
-  border-radius: 10px;
-  background-color: var(--color-bg);
-  padding: 5px 10px;
-}
-
 /* HEIGHT UTILITIES */
 .h-10px {
   height: 10px;
@@ -204,84 +122,43 @@ input {
   height: 100px;
 }
 
-/* ===================== BUTTONS ===================== */
 
-.btn-primary {
-  background-color: var(--color-primary);
-  color: white;
-  border-radius: 10px;
-  border: none;
-}
-
-.btn-secondary {
-  background-color: var(--color-secondary);
-  color: white;
-}
-
-/* ===================== MODAL ===================== */
-
-.modal-body {
-  background-color: var(--modal-bg);
-  border-radius: 15px;
-}
-
-.modal-content {
-  border-radius: 15px;
-  border: none;
-}
 .dropdown-toggle::after {
     display: none !important;
 }
 /* ===================== SEARCH ===================== */
-p{
-  margin-bottom: 0 !important;
-}
-.search-box {
-  background-color: var(--color-primary);
-  border-radius: 10px;
-}
 
-.bus-card {
-  background-color: var(--color-primary);
-  border-radius: 20px;
-  padding: 15px;
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.dark{
+  --bg-color: #011537;
+  --text-color: white;
+  --button-bg: #02a19b;
+  --border-color:#02a19c7f;
+  background: #011537;
   color: white;
 }
-
-/* ===================== PROFILE ===================== */
-
-.profile-img {
-  border-radius: 50%;
-  background-color: white;
-}
-
-.profile-input {
-  height: 50px;
-  border: 1px solid #aaa;
-  border-radius: 10px;
-}
-
-.profile-btn {
-  background-color: var(--color-primary);
-  color: white;
-  border-radius: 10px;
-  height: 40px;
-}
-
-/* ===================== FOOTER ===================== */
-
-#footer {
-  color: #b1a8a8;
-}
-
-p {
-  margin-bottom: 0 !important;
+.light{
+  --bg-color: white;
+  --text-color: black;
+  --button-bg: #02a19b;
+  --border-color:#02a19c5e;
+  background: white;
+  color: black;
 }
 
 .Social-Icon:hover {
   transform: scale(1.3);
 }
-
+.bg-teal{
+  background-color: var(--button-bg);
+}
+.color-teal{
+  color: var(--button-bg);
+}
 .SocialMedia-Link {
   height: 35px;
   width: 35px;
@@ -300,21 +177,9 @@ p {
 /* ===================== RESPONSIVE ===================== */
 
 @media (max-width: 768px) {
-  #logo {
-    font-size: 18px;
-  }
-
-  .card {
-    width: 100%;
-  }
-
-  .banner-text {
-    font-size: 18px;
-  }
+ 
 }
 
 @media (min-width: 1024px) {
-  .card {
-    width: 70%;
-  }
+  
 }
