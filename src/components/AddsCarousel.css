@@ -2,3 +2,9 @@
     height: 250px;
     border-radius: 35px;
 }
+@media (max-width:568px) {
+    .after-search-card-div{
+        background: var(--bg-color);
+        /* margin-top: 70px; */
+    }
+}

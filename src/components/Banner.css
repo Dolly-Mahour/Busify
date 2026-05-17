@@ -12,12 +12,17 @@
     background-image: url('../images/bg-banner-image-small.png');
     background-size: cover;
     background-repeat: no-repeat;
+    border-end-end-radius: 10%;
+    border-end-start-radius: 10%;
     
 }
 
 .card-border-end{
     border-right: none !important;
     border: none !important;
+}
+.bannerBgImage{
+    height: 65% !important;
 }
 }
 .bannerText{

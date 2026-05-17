@@ -1,56 +1,154 @@
-
 /* ===================== GLOBAL ===================== */
 
 body {
   height: 100vh;
 }
+
 /* HEIGHT UTILITIES IN % (SAFE) */
 
-.h-5  { height: 5%; }
-.h-10 { height: 10%; }
-.h-15 { height: 15%; }
-.h-20 { height: 20%; }
-.h-30 { height: 30%; }
-.h-35 { height: 35%; }
-.h-40 { height: 40%; }
-.h-45 { height: 45%; }
-.h-55 { height: 55%; }
-.h-60 { height: 60%; }
-.h-65 { height: 65%; }
-.h-70 { height: 70%; }
-.h-80 { height: 80%; }
-.h-85 { height: 85%; }
-.h-90 { height: 90%; }
-.h-95 { height: 95%; }
+.h-5 {
+  height: 5%;
+}
+
+.h-10 {
+  height: 10%;
+}
+.h-100vh{
+  height: 100vh;
+}
+.h-15 {
+  height: 15%;
+}
+
+.h-20 {
+  height: 20%;
+}
+
+.h-30 {
+  height: 30%;
+}
+
+.h-35 {
+  height: 35%;
+}
+
+.h-40 {
+  height: 40%;
+}
+
+.h-45 {
+  height: 45%;
+}
+
+.h-55 {
+  height: 55%;
+}
+
+.h-60 {
+  height: 60%;
+}
+
+.h-65 {
+  height: 65%;
+}
+
+.h-70 {
+  height: 70%;
+}
+
+.h-80 {
+  height: 80%;
+}
+
+.h-85 {
+  height: 85%;
+}
+
+.h-90 {
+  height: 90%;
+}
+
+.h-95 {
+  height: 95%;
+}
 
 
-.w-5 { width: 5%; }
-.w-10 { width: 10%; }
-.w-15 { width: 15%; }
-.w-20 { width: 20%; }
-.w-30 { width: 30%; }
-.w-35 { width: 35%; }
-.w-40 { width: 40%; }
-.w-45 { width: 45%; }
-.w-55 { width: 55%; }
-.w-60 { width: 60%; }
-.w-65 { width: 65%; }
-.w-70 { width: 70%; }
-.w-80 { width: 80%; }
-.w-85 { width: 85%; }
-.w-90 { width: 90%; }
-.w-95 { width: 95%; }
+.w-5 {
+  width: 5%;
+}
+
+.w-10 {
+  width: 10%;
+}
+
+.w-15 {
+  width: 15%;
+}
+
+.w-20 {
+  width: 20%;
+}
+
+.w-30 {
+  width: 30%;
+}
+
+.w-35 {
+  width: 35%;
+}
+
+.w-40 {
+  width: 40%;
+}
+
+.w-45 {
+  width: 45%;
+}
+
+.w-55 {
+  width: 55%;
+}
+
+.w-60 {
+  width: 60%;
+}
+
+.w-65 {
+  width: 65%;
+}
+
+.w-70 {
+  width: 70%;
+}
+
+.w-80 {
+  width: 80%;
+}
+
+.w-85 {
+  width: 85%;
+}
+
+.w-90 {
+  width: 90%;
+}
+
+.w-95 {
+  width: 95%;
+}
 
 p {
   margin-bottom: 0 !important;
 }
+
 .card-overlay {
   position: relative;
-  top: -20px; 
+  top: -20px;
   z-index: 10;
   color: var(--text-color);
   border: 1px solid var(--border-color);
 }
+
 select:focus-visible {
   outline: none !important;
 }
@@ -68,6 +166,7 @@ select {
   -webkit-appearance: none;
   -moz-appearance: none;
 }
+
 input {
   background: transparent;
   border: none;
@@ -78,9 +177,10 @@ input {
   color: #6c6d6de2;
 }
 
-.footer-contact-text{
+.footer-contact-text {
   color: var(--text-color);
 }
+
 /* HEIGHT UTILITIES */
 .h-10px {
   height: 10px;
@@ -124,8 +224,9 @@ input {
 
 
 .dropdown-toggle::after {
-    display: none !important;
+  display: none !important;
 }
+
 /* ===================== SEARCH ===================== */
 
 input::-webkit-outer-spin-button,
@@ -133,19 +234,21 @@ input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
-.dark{
+
+.dark {
   --bg-color: #011537;
   --text-color: white;
   --button-bg: #02a19b;
-  --border-color:#02a19c7f;
+  --border-color: #02a19c7f;
   background: #011537;
   color: white;
 }
-.light{
+
+.light {
   --bg-color: white;
   --text-color: black;
   --button-bg: #02a19b;
-  --border-color:#02a19c5e;
+  --border-color: #02a19c5e;
   background: white;
   color: black;
 }
@@ -153,12 +256,15 @@ input::-webkit-inner-spin-button {
 .Social-Icon:hover {
   transform: scale(1.3);
 }
-.bg-teal{
+
+.bg-teal {
   background-color: var(--button-bg);
 }
-.color-teal{
+
+.color-teal {
   color: var(--button-bg);
 }
+
 .SocialMedia-Link {
   height: 35px;
   width: 35px;
@@ -169,17 +275,42 @@ input::-webkit-inner-spin-button {
   align-items: center;
   margin: 5px;
 }
-.center-div{
+
+.center-div {
   display: flex;
   justify-content: center;
   align-items: center;
 }
+.logoImage{
+  height: 50px;
+}
+.bg-green{
+  background: rgb(9, 167, 9) !important;
+}
 /* ===================== RESPONSIVE ===================== */
 
-@media (max-width: 768px) {
- 
+@media (max-width: 568px) {
+  .card-overlay {
+    position: relative;
+    top: -180px;
+    z-index: 10;
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+  }
+  p{
+    font-size: 12px !important;
+  }
+  .logoImage{
+    height: 40px;
+  }
 }
 
-@media (min-width: 1024px) {
-  
+@media (min-width: 768px) {
+.card-overlay {
+    position: relative;
+    top: -70px;
+    z-index: 10;
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+  }
 }

@@ -4,9 +4,17 @@ import "./Navbar.css";
 import { useNavigate } from "react-router-dom";
 import NavbarItems from "./NavbarItems";
 import { DotLottieReact } from "@lottiefiles/dotlottie-react";
-import { Toast, Button, ToastContainer } from "react-bootstrap";
-
-export default function Navbar({ theme, setTheme }) {
+import { Toast, Button, ToastContainer, Modal } from "react-bootstrap";
+// import { Modal } from "bootstrap";
+// import * as bootstrap from "bootstrap";
+export default function Navbar({
+  openLoginModal,
+  setOpenLoginModal,
+  isUserLoggedIn,
+  setIsUserLoggedIn,
+  theme,
+  setTheme,
+}) {
   const navigate = useNavigate();
   const [showPassword, showOrHide] = useState(false);
   const [registerationResponse, setRegisterationResponse] = useState(0);
@@ -16,22 +24,29 @@ export default function Navbar({ theme, setTheme }) {
   const [isToken, setIsToken] = useState(false);
   const [isUserCreated, setIsUserCreated] = useState(false);
   const [isLogin, setIsLoginCreated] = useState(false);
+  const [toastBg, setToastBg] = useState("");
   const [loginMessage, setLoginMessage] = useState("");
+  const [registerMessage, setRegisterMessage] = useState("");
   const [registrationMessage, setRegistrationMessage] = useState("");
   useEffect(() => {
     console.log(" registered ? ", registerationResponse);
     if (registerationResponse == 201) {
       console.log("showing toast");
       setIsUserCreated(true);
-    } else {
+      setRegisterMessage("User Created SuccessFully !!");
+      setToastBg("bg-green");
+    } else if (registerationResponse !== 0) {
       console.log("not showing toast");
-      setIsUserCreated(false);
+      setIsUserCreated(true);
+      setRegisterMessage("User Registeration Failed !!");
+      setToastBg("bg-danger");
     }
   }, [registerationResponse]);
   useEffect(() => {
     verifyUser();
-    console.log("saved token ----",localStorage.getItem("token"));
+    console.log("saved token ----", localStorage.getItem("token"));
   }, []);
+
   const verifyUser = async () => {
     const token = localStorage.getItem("token");
 
@@ -52,11 +67,13 @@ export default function Navbar({ theme, setTheme }) {
         setIsLoginCreated(false);
         // setLoginMessage("Token Unautorized Login again !!");
         setIsToken(true);
+        setIsUserLoggedIn(true);
       } else {
         localStorage.removeItem("token");
         setIsLoginCreated(true);
         // setToken(data.token);
         setIsToken(false);
+        setIsUserLoggedIn(false);
         setLoginMessage("Token Unautorized Login again !!");
         e.preventDefault();
       }
@@ -128,11 +145,14 @@ export default function Navbar({ theme, setTheme }) {
       console.log(data);
     } catch (e) {
       console.log(e);
+      setRegistrationMessage(e);
     }
   }
   async function logout(e) {
     setIsToken(false);
+    setIsUserLoggedIn(false);
     setIsLoginCreated(true);
+    setToastBg("bg-success");
     setLoginMessage("User Logout Successfully !!");
     localStorage.removeItem("token");
     navigate("/");
@@ -148,15 +168,18 @@ export default function Navbar({ theme, setTheme }) {
         body: JSON.stringify(loginFormData),
       });
       const data = await response.json();
-      // setLoginFormData(data);
       setToken(data.token);
       setIsToken(true);
+      setIsUserLoggedIn(true);
       setIsLoginCreated(true);
+      setToastBg("bg-green");
+      setOpenLoginModal(false);
       setLoginMessage(data.message);
       localStorage.setItem("token", data.token);
       console.log("login response", data);
     } catch (e) {
       setIsLoginCreated(true);
+      setToastBg("bg-danger");
       setLoginMessage(e);
       console.log("login error", e);
     }
@@ -165,18 +188,18 @@ export default function Navbar({ theme, setTheme }) {
     <>
       <nav className="navbar navbar-expand-lg w-100">
         <div className="container-fluid g-0 px-2 d-flex justify-content-between align-items-center">
-          <div className="d-inline-block">
+          <div className="d-inline-block w-40">
             <a className="d-flex alig-items-center" href="#">
               <Logo theme={theme} setTheme={setTheme}></Logo>
             </a>
           </div>
           <div className="navItemsWidth pt-2">
             <ul className="w-100 d-flex align-items-center">
-              <div className="d-md-flex d-none w-50 justify-content-around align-items-center">
+              <li className="d-md-flex d-none w-50 justify-content-around align-items-center">
                 <NavbarItems theme={theme}></NavbarItems>
-              </div>
-              <div className="flex-grow-1 d-flex justify-content-around align-items-center">
-                <li
+              </li>
+              <li className="flex-grow-1 d-flex justify-content-around align-items-center">
+                <div
                   className="nav-item"
                   style={{ display: isToken ? "none" : "flex" }}
                 >
@@ -295,8 +318,7 @@ export default function Navbar({ theme, setTheme }) {
                             already have an account?{" "}
                             <p
                               className="color-teal ms-2"
-                              data-bs-toggle="modal"
-                              data-bs-target="#loginModal"
+                              
                               typeof="button"
                             >
                               Login
@@ -306,7 +328,7 @@ export default function Navbar({ theme, setTheme }) {
                       </div>
                     </div>
                   </div>
-                </li>
+                </div>
                 <ToastContainer
                   position="bottom-end"
                   className="p-3 position-fixed"
@@ -316,14 +338,14 @@ export default function Navbar({ theme, setTheme }) {
                     onClose={() => setIsUserCreated(false)}
                     delay={3000}
                     autohide
-                    className="bg-teal bg-gradient"
+                    className={toastBg}
                   >
                     <Toast.Header>
                       <strong className="me-auto">Registration Status</strong>
                       <small>Just now</small>
                     </Toast.Header>
                     <Toast.Body className="text-white fw-semibold fst-italic">
-                      User Registered SuccessFully !!
+                      {registerMessage}
                     </Toast.Body>
                   </Toast>
                 </ToastContainer>
@@ -336,7 +358,7 @@ export default function Navbar({ theme, setTheme }) {
                     onClose={() => setIsLoginCreated(false)}
                     delay={3000}
                     autohide
-                    className="bg-info bg-gradient"
+                    className={toastBg}
                   >
                     <Toast.Header>
                       <strong className="me-auto">Login Status</strong>
@@ -347,114 +369,114 @@ export default function Navbar({ theme, setTheme }) {
                     </Toast.Body>
                   </Toast>
                 </ToastContainer>
-                <li
+                <div
                   className="nav-item"
                   style={{ display: isToken ? "none" : "flex" }}
                 >
                   <button
                     className="nav-link btn p-1 px-3 rounded-pill text-white login-button"
                     type="button"
-                    data-bs-toggle="modal"
-                    data-bs-target="#loginModal"
+                    onClick={() => setOpenLoginModal(true)}
                   >
                     <p>Login</p>
                   </button>
-                  <div
-                    className="modal fade"
-                    id="loginModal"
-                    tabIndex="-1"
-                    aria-labelledby="loginModalLabel"
-                    aria-hidden="true"
+                  <Modal
+                    show={openLoginModal}
+                    onHide={() => setOpenLoginModal(false)}
+                    centered
+                    
                   >
-                    <div className="modal-dialog modal-dialog-centered">
-                      <div className="modal-content rounded-4">
-                        <div className="modal-body p-4 rounded-4 pt-5">
-                          <div className="center-div">
-                            <Logo theme={theme} setTheme={setTheme}></Logo>
-                          </div>
-                          <h3 className="center-div fst-italic py-2">Login</h3>
-                          <DotLottieReact
-                            src="https://lottie.host/14273cfb-afce-4097-97ba-e66ec31c8b2b/jkgwm3q4Hl.json"
-                            loop
-                            autoplay
-                            className="my-3"
-                          />
-                          <form className="px-3" onSubmit={loginUser}>
-                            <input
-                              type="tel"
-                              name="mobile"
-                              maxLength="10"
-                              onChange={(e) => {
-                                loginHandleChange(e);
-                                checkMobileNumberLength(e);
-                              }}
-                              className="border custom-border w-100 h-50px rounded-4 my-2 p-2 px-3"
-                              placeholder="Enter your phone number"
-                            />
-                            <p
-                              className="text-danger px-3"
-                              style={{
-                                display: isMobileNumberValid ? "none" : "block",
-                              }}
-                            >
-                              Please enter valid 10 digit number
-                            </p>
-                            <div className="d-flex align-items-center border custom-border w-100 h-50px rounded-4 my-2 p-2 px-3">
-                              <input
-                                type="password"
-                                onChange={(e) => {
-                                  checkPasswordLength(e);
-                                  loginHandleChange(e);
-                                }}
-                                maxLength="8"
-                                type={showPassword ? "text" : "password"}
-                                name="password"
-                                className=" flex-grow-1 "
-                                placeholder="Enter your password"
-                              />
-                              <p
-                                className="text-secondary"
-                                onClick={() => showOrHide(!showPassword)}
-                              >
-                                {showPassword ? "hide" : "show"}
-                              </p>
-                            </div>
-                            <p
-                              className="text-danger px-3"
-                              style={{
-                                display: isPasswordValid ? "none" : "block",
-                              }}
-                            >
-                              Please enter valid 8 digit password
-                            </p>
-                            <div className="center-div">
-                              <button
-                                type="submit"
-                                data-bs-dismiss="modal"
-                                className="border-0 text-white bg-teal rounded-4 px-3 p-2 my-3"
-                              >
-                                Login now
-                              </button>
-                            </div>
-                          </form>
-
-                          <div className="d-flex justify-content-center my-3">
-                            Do not have an account ?
-                            <p
-                              className="ms-2 color-teal"
-                              type="button"
-                              data-bs-toggle="modal"
-                              data-bs-target="#registerModal"
-                            >
-                              Register
-                            </p>
-                          </div>
-                        </div>
+                    <Modal.Body className={`p-4 rounded-3 pt-5 ${theme}`}>
+                      <div className="center-div">
+                        <Logo theme={theme} setTheme={setTheme}></Logo>
                       </div>
-                    </div>
-                  </div>
-                </li>
-                <li
+
+                      <h3 className="center-div fst-italic py-2">Login</h3>
+
+                      <DotLottieReact
+                        src="https://lottie.host/14273cfb-afce-4097-97ba-e66ec31c8b2b/jkgwm3q4Hl.json"
+                        loop
+                        autoplay
+                        className="my-3"
+                      />
+
+                      <form className="px-3" onSubmit={loginUser}>
+                        <input
+                          type="tel"
+                          name="mobile"
+                          maxLength="10"
+                          onChange={(e) => {
+                            loginHandleChange(e);
+                            checkMobileNumberLength(e);
+                          }}
+                          className="border custom-border w-100 h-50px rounded-4 my-2 p-2 px-3"
+                          placeholder="Enter your phone number"
+                        />
+
+                        <p
+                          className="text-danger px-3"
+                          style={{
+                            display: isMobileNumberValid ? "none" : "block",
+                          }}
+                        >
+                          Please enter valid 10 digit number
+                        </p>
+
+                        <div className="d-flex align-items-center border custom-border w-100 h-50px rounded-4 my-2 p-2 px-3">
+                          <input
+                            onChange={(e) => {
+                              checkPasswordLength(e);
+                              loginHandleChange(e);
+                            }}
+                            maxLength="8"
+                            type={showPassword ? "text" : "password"}
+                            name="password"
+                            className="flex-grow-1"
+                            placeholder="Enter your password"
+                          />
+
+                          <p
+                            className="text-secondary"
+                            onClick={() => showOrHide(!showPassword)}
+                          >
+                            {showPassword ? "hide" : "show"}
+                          </p>
+                        </div>
+
+                        <p
+                          className="text-danger px-3"
+                          style={{
+                            display: isPasswordValid ? "none" : "block",
+                          }}
+                        >
+                          Please enter valid 8 digit password
+                        </p>
+
+                        <div className="center-div">
+                          <button
+                            type="submit"
+                            className="border-0 text-white bg-teal rounded-4 px-3 p-2 my-3"
+                          >
+                            Login now
+                          </button>
+                        </div>
+                      </form>
+
+                      <div className="d-flex justify-content-center my-3">
+                        Do not have an account ?
+                        <p
+                          className="ms-2 color-teal"
+                          onClick={() => {
+                            setOpenLoginModal(false);
+                          }}
+                        >
+                          Register
+                        </p>
+                      </div>
+                    </Modal.Body>
+                  </Modal>
+                </div>
+                <div
                   className="nav-item"
                   style={{ display: isToken ? "flex" : "none" }}
                 >
@@ -464,12 +486,10 @@ export default function Navbar({ theme, setTheme }) {
                   >
                     <img className="h-50" src="../images/profile.png" alt="" />
                   </a>
-                </li>
-                <li className="nav-item dropdown center-div">
-                  <a
+                </div>
+                <div className="nav-item dropdown center-div">
+                  <button
                     className="nav-link dropdown-toggle p-0 center-div"
-                    href="#"
-                    role="button"
                     data-bs-toggle="dropdown"
                     aria-expanded="false"
                   >
@@ -482,13 +502,10 @@ export default function Navbar({ theme, setTheme }) {
                       }
                       alt="menu"
                     />
-                  </a>
+                  </button>
                   <ul className="dropdown-menu dropdown-menu-end rounded-4">
                     <li>
-                      <a
-                        className="dropdown-item d-flex  align-items-center justify-content-between"
-                        href="#"
-                      >
+                      <button className="dropdown-item d-flex  align-items-center justify-content-between">
                         <div className="d-flex">
                           <img
                             className="h-20px me-3"
@@ -517,14 +534,14 @@ export default function Navbar({ theme, setTheme }) {
                             />
                           </div>
                         </div>
-                      </a>
+                      </button>
                     </li>
-                    <div className="d-lg-none d-md-none d-sm-block">
+                    <li className="d-lg-none d-md-none d-sm-block">
                       <NavbarItems
                         theme={theme}
                         setTheme={setTheme}
                       ></NavbarItems>
-                    </div>
+                    </li>
                     <li>
                       <a
                         className="dropdown-item d-flex  align-items-center"
@@ -596,7 +613,7 @@ export default function Navbar({ theme, setTheme }) {
                     <li>
                       <button
                         type="button"
-                        className="dropdown-item d-flex align-items-center"
+                        className="dropdown-item align-items-center"
                         data-bs-toggle="modal"
                         data-bs-target="#logoutModal"
                         style={{ display: isToken ? "flex" : "none" }}
@@ -610,7 +627,7 @@ export default function Navbar({ theme, setTheme }) {
                       </button>
                     </li>
                   </ul>
-                </li>
+                </div>
                 <div
                   className="modal"
                   id="logoutModal"
@@ -638,7 +655,7 @@ export default function Navbar({ theme, setTheme }) {
                     </div>
                   </div>
                 </div>
-              </div>
+              </li>
             </ul>
           </div>
         </div>

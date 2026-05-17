@@ -44,6 +44,9 @@ input{
     color: inherit !important;
     box-shadow: none !important;
 }
+/* .modal-bg{
+    background: var(--bg-color);
+} */
 .profile-icon{
     height: 45px;
     width: 45px;

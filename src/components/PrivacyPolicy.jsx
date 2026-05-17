@@ -1,7 +1,7 @@
 export default function PrivacyPolicy({ theme }) {
   return (
     <>
-      <div className={`px-4 py-5 h-auto ${theme}`}>
+      <div className={`px-4 pt-2 pb-5 h-auto ${theme}`}>
         <div className="d-inline-block">
           <a href="/" className="bg-teal text-white p-2 rounded-3 text-decoration-none center-div">
             <img

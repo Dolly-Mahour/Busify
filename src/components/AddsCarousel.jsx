@@ -51,7 +51,7 @@ export default function AddsCarousel({theme,setTheme}) {
     ),
   ];
   return (
-    <div className={`container-fluid g-0 py-5 text-center ${theme}`} >
+    <div className={`container-fluid g-0 pb-5 text-center after-search-card-div ${theme}`} >
       <div className="px-5 py-5">
         <h1 className="fw-bold fst-italic">
           Enjoy your travel experience with us

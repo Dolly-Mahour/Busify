@@ -1,7 +1,7 @@
 export default function TermAndConditions({ theme }) {
   return (
     <>
-      <div className={`px-4 py-5 h-auto ${theme}`}>
+      <div className={`px-4 pt-2 pb-5 h-auto ${theme}`}>
         <div className=" d-inline-block">
           <a
             href="/"

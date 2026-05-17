@@ -18,8 +18,7 @@ export default function NavbarItems({theme}) {
   ];
   return (
     <>
-      {/* <div className="d-flex justify-content-between w-100 align-items-center"> */}
-        <li className="nav-item dropdown ms-2 my-1">
+        <div className="nav-item dropdown ms-2 my-1">
           <a
             className="nav-link dropdown-toggle d-flex align-items-center ms-2"
             href="#"
@@ -51,8 +50,8 @@ export default function NavbarItems({theme}) {
               </div>
             </div>
           </div>
-        </li>
-        <li className="nav-item dropdown ms-2 my-1">
+        </div>
+        <div className="nav-item dropdown ms-2 my-1">
           <a
             className="nav-link dropdown-toggle d-flex align-items-center ms-2"
             href="#"
@@ -78,9 +77,7 @@ export default function NavbarItems({theme}) {
               </li>
             ))}
           </ul>
-        </li>
-        
-      {/* </div> */}
+        </div>
     </>
   );
 }
