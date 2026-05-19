@@ -15,7 +15,10 @@ import ContactUs from "./components/ContactUs.jsx";
 import CancellationPolicy from "./components/CancellationPolicy.jsx";
 function App() {
   const currentTheme = localStorage.getItem("currentTheme");
-  const [theme, setTheme] = useState(currentTheme);
+  const [theme, setTheme] = useState(() => {
+  return localStorage.getItem("currentTheme") || "light";
+});
+  
   const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
   const [openLoginModal, setOpenLoginModal] = useState(false);
   const [searchDataList, setSearchDataList] = useState([]);
