@@ -7,7 +7,7 @@ export default function Footer({theme,setTheme}) {
         <div className="d-flex justify-content-center pt-3">
           <Logo theme={theme}></Logo>
         </div>
-        <div className="d-flex row g-0 justify-content-around align-items-center px-5 py-3">
+        <div className="d-flex row g-0 justify-content-around align-items-center mpx-5 py-3">
           <div className="center-div my-2 col-lg-4 col-ms-4 col-sm-12">
             <img className="h-20px" src="../images/email.png" alt="email" />
             <a className="text-decoration-none ms-2 footer-contact-text" href="mailto:dollymahour52@gmail.com">hello@probusify.com</a>
@@ -89,7 +89,7 @@ export default function Footer({theme,setTheme}) {
         </div>
         <div className="center-div">
           <div className="w-lg-25 w-md-50 w-sm-100   fs-6 mb-3">
-            <div id="copyright_footer" className="p-0 fw-bold mb-0 text-center text-body-tertiary">
+            <div id="copyright_footer" className="p-0 fs-vs px-3 fw-bold mb-0 text-center footer-text">
               Copyright © Make it Busify | Designed by make it services-Powered
               by busify
             </div>

@@ -19,7 +19,7 @@ export default function Banner({
         <div className={`g-0 h-75 bannerBgImage ${theme}`}>
           <div className="h-100 row g-0">
             <div className="col-lg-6 col-md-6 col-sm-12 d-lg-flex d-md-flex d-none h-100 p-4"></div>
-            <div className="col-lg-6 col-md-6 col-sm-12 h-100 d-flex flex-column justify-content-center align-items-center px-5">
+            <div className="col-lg-6 col-md-6 col-sm-12 h-100 d-flex flex-column justify-content-center align-items-center mpx-5">
               <h1 className="py-3 fw-bold text-center bannerText fst-italic">
                 {t("bannertext1")}
               </h1>

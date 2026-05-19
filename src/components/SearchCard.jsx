@@ -73,7 +73,7 @@ export default function SearchCard({
     <>
       <form
         onSubmit={searchBusTrip}
-        className={`row g-0 card-overlay border-2 shadow rounded-5 mx-5 p-3 ${theme}`}
+        className={`row g-0 card-overlay border-2 shadow rounded-5 mmx-5 p-3 ${theme}`}
       >
         <div className="col-lg-4 col-md-4 col-sm-12 p-3">
           <div className=" card-border-end d-flex flex-column justify-content-around h-100 px-2">

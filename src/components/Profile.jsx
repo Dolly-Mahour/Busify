@@ -67,9 +67,9 @@ export default function Profile({
 
         <h1 className="fst-italic fw-bold my-5 center-div">Profile</h1>
 
-        <div className="row g-0 px-5">
+        <div className="row g-0 mpx-5">
           <div className="col-lg-6 col-md-6 col-sm-12 px-3">
-            <p className="fw-semibold fst-italic">Name{userProfile.name}</p>
+            <p className="fw-semibold fst-italic">Name</p>
             <input
               type="text"
               className="custom-border w-100 h-50px rounded-4 my-2 p-2 px-3"
@@ -113,7 +113,7 @@ export default function Profile({
                 }
               />
               <p
-                className="text-secondary cursor-pointer"
+                className="text-secondary d-inline-block"
                 onClick={() => setShowPassword(!showPassword)}
               >
                 {showPassword ? "Hide" : "Show"}
@@ -122,7 +122,7 @@ export default function Profile({
           </div>
           <button
             onClick={updateUser}
-            className="bg-teal border-0 text-white d-inline-block p-2 rounded-3 fst-italic fw-semibold"
+            className="bg-teal my-4 border-0 text-white p-2 rounded-3 fst-italic fw-semibold"
           >
             Update
           </button>

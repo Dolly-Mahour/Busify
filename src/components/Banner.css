@@ -46,7 +46,7 @@ select{
 
 .card-overlay {
     position: relative;
-    top: -180px;
+    top: -120px;
     z-index: 10;
     color: var(--text-color);
     border: 1px solid var(--border-color);

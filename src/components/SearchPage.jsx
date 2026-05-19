@@ -73,7 +73,7 @@ export default function SearchPage({
           {searchDataList.length > 0 ? (
             <div className="row g-0 justify-content-between px-2 pb-5">
               <div className="col-lg-5 px-3 col-md-4 col-sm-12 ">
-                <div className="card d-flex text-black flex-column justify-content-between p-4 px-5 bg-search-card rounded-4">
+                <div className="card d-flex text-black flex-column justify-content-between p-4 mpx-5 bg-search-card rounded-4">
                   <h5 className="fst-italic">Sort by -</h5>
                   <div className="d-flex justify-content-between align-items-center py-3">
                     <p>Price low to high</p>

@@ -54,8 +54,8 @@ export default function AddsCarousel({theme,setTheme}) {
     ),
   ];
   return (
-    <div className={`container-fluid g-0 pb-5 text-center after-search-card-div ${theme}`} >
-      <div className="px-5 py-5">
+    <div className={`container-fluid g-0 padding-top pb-5 text-center after-search-card-div ${theme}`} >
+      <div className="mpx-5 py-5">
         <h1 className="fw-bold fst-italic">
           {t("carouselHeading1")}
         </h1>

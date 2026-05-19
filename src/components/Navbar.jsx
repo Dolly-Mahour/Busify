@@ -402,12 +402,12 @@ export default function Navbar({
                                 maxLength="8"
                                 type={showPassword ? "text" : "password"}
                                 name="password"
-                                className="flex-grow-1"
+                                className="flex-grow-1 "
                                 placeholder={t("passwordPlaceholder")}
                                 value={registrationFormData.password}
                               />
                               <p
-                                className="text-secondary"
+                                className="text-secondary d-inline-block"
                                 onClick={() => showOrHide(!showPassword)}
                               >
                                 {showPassword ? "hide" : "show"}
@@ -558,7 +558,7 @@ export default function Navbar({
                           />
 
                           <p
-                            className="text-secondary"
+                            className="text-secondary d-inline-block"
                             onClick={() => showOrHide(!showPassword)}
                           >
                             {showPassword ? "hide" : "show"}
@@ -641,7 +641,7 @@ export default function Navbar({
                           <p>{t("theme")}</p>
                         </div>
                         <div>
-                          <div className="form-check form-switch">
+                          <div className="form-check form-switch ms-4">
                             <input
                               className="form-check-input"
                               name="theme"
@@ -765,7 +765,7 @@ export default function Navbar({
                     <li>
                       <a
                         className="dropdown-item d-flex  align-items-center"
-                        href="/privacypolicy"
+                        onClick={() => navigate("/privacypolicy")}
                       >
                         <img
                           className="h-20px me-3"
@@ -782,7 +782,7 @@ export default function Navbar({
                     <li>
                       <a
                         className="dropdown-item d-flex  align-items-center"
-                        href="/termandconditions"
+                        onClick={() => navigate("/termandconditions")}
                       >
                         <img
                           className="h-20px me-3"
@@ -799,7 +799,7 @@ export default function Navbar({
                     <li>
                       <a
                         className="dropdown-item d-flex  align-items-center"
-                        href="/contactus"
+                        onClick={() => navigate("/contactus")}
                       >
                         <img
                           className="h-20px me-3"
@@ -816,7 +816,7 @@ export default function Navbar({
                     <li>
                       <a
                         className="dropdown-item d-flex  align-items-center"
-                        href="/cancellationpolicy"
+                        onClick={() => navigate("/cancellationpolicy")}
                       >
                         <img
                           className="h-20px me-3"
