@@ -13,9 +13,11 @@ body {
 .h-10 {
   height: 10%;
 }
-.h-100vh{
+
+.h-100vh {
   height: 100vh;
 }
+
 .h-15 {
   height: 15%;
 }
@@ -141,13 +143,7 @@ p {
   margin-bottom: 0 !important;
 }
 
-.card-overlay {
-  position: relative;
-  top: -20px;
-  z-index: 10;
-  color: var(--text-color);
-  border: 1px solid var(--border-color);
-}
+
 
 select:focus-visible {
   outline: none !important;
@@ -248,7 +244,7 @@ input::-webkit-inner-spin-button {
   --bg-color: white;
   --text-color: black;
   --button-bg: #02a19b;
-  --border-color: #02a19c5e;
+  --border-color: #07716e5e;
   background: white;
   color: black;
 }
@@ -261,10 +257,16 @@ input::-webkit-inner-spin-button {
   background-color: var(--button-bg);
 }
 
+.bg-search-card{
+  background: #d3edea !important;
+}
 .color-teal {
   color: var(--button-bg);
 }
-
+.custom-border{
+    border: 1px solid var(--border-color) !important;
+    /* border-color: ; */
+}
 .SocialMedia-Link {
   height: 35px;
   width: 35px;
@@ -281,36 +283,61 @@ input::-webkit-inner-spin-button {
   justify-content: center;
   align-items: center;
 }
-.logoImage{
+
+.logoImage {
   height: 50px;
 }
-.bg-green{
-  background: rgb(9, 167, 9) !important;
+
+.bg-green {
+  background: rgb(23, 207, 23) !important;
+}
+.noTripFound.light{
+  height: 500px;
+  width: 100%;
+  background-image: url('../images/notripfound-light.png');
+  background-repeat: no-repeat;
+  background-size:cover;
+  background-position: center;
+  box-shadow: inset 50px 80px 100px white;
+}
+.noTripFound.dark{
+  height: 500px;
+  width: 100%;
+  background-image: url('../images/notripfound-dark.png');
+  background-repeat: no-repeat;
+  background-size:cover;
+  background-position: center;
+   box-shadow: inset 50px 80px 100px #00173a;
+}
+.fs-vs{
+  font-size: 15px;
+}
+.h-300px{
+  height: 300px;
+}
+.setCardPosition {
+  margin-top: 100px !important;
+  margin-bottom: -50px !important;
+}
+.profile-icon{
+    height: 45px;
+    width: 45px;
 }
 /* ===================== RESPONSIVE ===================== */
 
 @media (max-width: 568px) {
-  .card-overlay {
-    position: relative;
-    top: -180px;
-    z-index: 10;
-    color: var(--text-color);
-    border: 1px solid var(--border-color);
+  .setCardPosition {
+    margin-top: 200px !important;
+    margin-bottom: -100px !important;
   }
-  p{
+.noTripFound{
+  height: 300px !important;
+}
+  p {
     font-size: 12px !important;
   }
-  .logoImage{
-    height: 40px;
-  }
-}
 
-@media (min-width: 768px) {
-.card-overlay {
-    position: relative;
-    top: -70px;
-    z-index: 10;
-    color: var(--text-color);
-    border: 1px solid var(--border-color);
+  .logoImage {
+    height: 40px;
   }
 }

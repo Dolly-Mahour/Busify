@@ -35,3 +35,29 @@
 select{
   color: var(--text-color);
 }
+.card-overlay {
+  position: relative;
+  top: -20px;
+  z-index: 10;
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+}
+@media (max-width:568px) {
+
+.card-overlay {
+    position: relative;
+    top: -180px;
+    z-index: 10;
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+  }
+}
+@media (min-width: 768px) {
+.card-overlay {
+    position: relative;
+    top: -70px;
+    z-index: 10;
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+  }
+}

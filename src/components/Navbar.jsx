@@ -1,12 +1,17 @@
 import { useEffect, useRef, useState } from "react";
 import Logo from "./Logo";
 import "./Navbar.css";
-import { useNavigate } from "react-router-dom";
-import NavbarItems from "./NavbarItems";
+import { useAsyncError, useNavigate } from "react-router-dom";
 import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 import { Toast, Button, ToastContainer, Modal } from "react-bootstrap";
-// import { Modal } from "bootstrap";
-// import * as bootstrap from "bootstrap";
+import { useTranslation } from "react-i18next";
+class FlagList {
+  constructor(name, imgName, i18nCode) {
+    this.name = name;
+    this.imgName = imgName;
+    this.i18nCode = i18nCode;
+  }
+}
 export default function Navbar({
   openLoginModal,
   setOpenLoginModal,
@@ -14,6 +19,8 @@ export default function Navbar({
   setIsUserLoggedIn,
   theme,
   setTheme,
+  userProfile,
+  setUserProfile,
 }) {
   const navigate = useNavigate();
   const [showPassword, showOrHide] = useState(false);
@@ -24,27 +31,32 @@ export default function Navbar({
   const [isToken, setIsToken] = useState(false);
   const [isUserCreated, setIsUserCreated] = useState(false);
   const [isLogin, setIsLoginCreated] = useState(false);
+  const [showToast, setShowToast] = useState(false);
   const [toastBg, setToastBg] = useState("");
   const [loginMessage, setLoginMessage] = useState("");
   const [registerMessage, setRegisterMessage] = useState("");
   const [registrationMessage, setRegistrationMessage] = useState("");
+  const [showDownload, setShowDownload] = useState(false);
+  const [showLanguages, setShowLanguages] = useState(false);
+  const flags = [
+    new FlagList("hindi", "../images/flag.png", "hi"),
+    new FlagList("english", "../images/united-kingdom.png", "en"),
+    new FlagList("japnese", "../images/japan.png", "ja"),
+    new FlagList("french", "../images/france.png", "fr"),
+    new FlagList("spanish", "../images/spain.png", "es"),
+  ];
   useEffect(() => {
-    console.log(" registered ? ", registerationResponse);
     if (registerationResponse == 201) {
-      console.log("showing toast");
       setIsUserCreated(true);
       setRegisterMessage("User Created SuccessFully !!");
       setToastBg("bg-green");
     } else if (registerationResponse !== 0) {
-      console.log("not showing toast");
       setIsUserCreated(true);
-      setRegisterMessage("User Registeration Failed !!");
       setToastBg("bg-danger");
     }
   }, [registerationResponse]);
   useEffect(() => {
     verifyUser();
-    console.log("saved token ----", localStorage.getItem("token"));
   }, []);
 
   const verifyUser = async () => {
@@ -53,25 +65,26 @@ export default function Navbar({
     if (!token) return;
 
     try {
-      const response = await fetch("http://localhost:5000/verify-token", {
-        method: "GET",
+      const response = await fetch(
+        "https://busprojectapis.onrender.com/verify-token",
+        {
+          method: "GET",
 
-        headers: {
-          Authorization: `Bearer ${token}`,
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         },
-      });
+      );
 
       const data = await response.json();
 
       if (data.success) {
         setIsLoginCreated(false);
-        // setLoginMessage("Token Unautorized Login again !!");
         setIsToken(true);
         setIsUserLoggedIn(true);
       } else {
         localStorage.removeItem("token");
         setIsLoginCreated(true);
-        // setToken(data.token);
         setIsToken(false);
         setIsUserLoggedIn(false);
         setLoginMessage("Token Unautorized Login again !!");
@@ -128,21 +141,24 @@ export default function Navbar({
     e.preventDefault();
 
     try {
-      const response = await fetch("http://localhost:5000/api/users", {
-        method: "POST",
+      const response = await fetch(
+        "https://busprojectapis.onrender.com/api/users",
+        {
+          method: "POST",
 
-        headers: {
-          "Content-Type": "application/json",
+          headers: {
+            "Content-Type": "application/json",
+          },
+
+          body: JSON.stringify(registrationFormData),
         },
-
-        body: JSON.stringify(registrationFormData),
-      });
+      );
 
       const data = await response.json();
 
       setRegisterationResponse(response.status);
+      setRegisterMessage(data.message);
       setRegistrationMessage(data.message);
-      console.log(data);
     } catch (e) {
       console.log(e);
       setRegistrationMessage(e);
@@ -152,40 +168,63 @@ export default function Navbar({
     setIsToken(false);
     setIsUserLoggedIn(false);
     setIsLoginCreated(true);
-    setToastBg("bg-success");
+    setShowToast(true);
+    setToastBg("bg-green");
     setLoginMessage("User Logout Successfully !!");
     localStorage.removeItem("token");
+    localStorage.removeItem("user");
     navigate("/");
   }
   async function loginUser(e) {
     e.preventDefault();
+
     try {
-      const response = await fetch("http://localhost:5000/api/users/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
+      const response = await fetch(
+        "https://busprojectapis.onrender.com/api/users/login",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(loginFormData),
         },
-        body: JSON.stringify(loginFormData),
-      });
+      );
+
       const data = await response.json();
+
+      if (!response.ok) {
+        setIsToken(false);
+        setIsUserLoggedIn(false);
+        setToastBg("bg-danger");
+        setLoginMessage(data.message || "Invalid credentials");
+        setOpenLoginModal(false);
+        setShowToast(true);
+        return;
+      }
+
       setToken(data.token);
       setIsToken(true);
+      setShowToast(true);
       setIsUserLoggedIn(true);
-      setIsLoginCreated(true);
       setToastBg("bg-green");
       setOpenLoginModal(false);
       setLoginMessage(data.message);
+      setUserProfile(data.user);
+
       localStorage.setItem("token", data.token);
-      console.log("login response", data);
+      localStorage.setItem("user", JSON.stringify(data.user));
     } catch (e) {
-      setIsLoginCreated(true);
+      setIsToken(false);
       setToastBg("bg-danger");
-      setLoginMessage(e);
-      console.log("login error", e);
+      setLoginMessage("Server error");
+      console.log(e);
     }
   }
+  const { t, i18n } = useTranslation();
+
   return (
     <>
+      {/* <h1>{t("welcome")}</h1> */}
       <nav className="navbar navbar-expand-lg w-100">
         <div className="container-fluid g-0 px-2 d-flex justify-content-between align-items-center">
           <div className="d-inline-block w-40">
@@ -195,8 +234,93 @@ export default function Navbar({
           </div>
           <div className="navItemsWidth pt-2">
             <ul className="w-100 d-flex align-items-center">
-              <li className="d-md-flex d-none w-50 justify-content-around align-items-center">
-                <NavbarItems theme={theme}></NavbarItems>
+              <li className={`nav-item dropdown d-none d-lg-flex mx-3`}>
+                <a
+                  className="nav-link dropdown-toggle d-flex align-items-center"
+                  href="#"
+                  role="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  <img
+                    className="h-20px"
+                    src={
+                      theme == "light"
+                        ? "../images/download.png"
+                        : "../images/download-white.png"
+                    }
+                    alt=""
+                  />
+                  <p className="align-items-center d-flex ms-3">
+                    {t("download")}
+                  </p>
+                </a>
+                <div className="dropdown-menu border border-secondary downloadDropdown rounded-4 p-2">
+                  <div className="row g-0 h-100 w-100">
+                    <div className="col-6 h-100 d-flex flex-column p-2  justify-content-center">
+                      <p className="mb-2 center-div">{t("download")}</p>
+                      <div className="d-flex flex-column justify-content-between h-60">
+                        <img
+                          className="h-30px w-100"
+                          src="../images/as.png"
+                          alt=""
+                        />
+                        <img
+                          className="h-30px w-100"
+                          src="../images/ps.png"
+                          alt=""
+                        />
+                      </div>
+                    </div>
+                    <div className="col-6 d-flex flex-column p-2  justify-content-center">
+                      <p className="mb-2 center-div">{t("scan")}</p>
+                      <img
+                        className="h-60"
+                        src="../images/dummyQR.png"
+                        alt="download"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </li>
+              <li className={`nav-item dropdown d-none d-lg-flex mx-3 ms-5`}>
+                <a
+                  className="nav-link dropdown-toggle d-flex align-items-center"
+                  href="#"
+                  role="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  <img
+                    className="h-20px"
+                    src={
+                      theme == "light"
+                        ? "../images/earth.png"
+                        : "../images/earth-white.png"
+                    }
+                    alt=""
+                  />
+                  <p className="align-items-center d-flex ms-3">
+                    {t("languages")}
+                  </p>
+                </a>
+                <ul className="dropdown-menu  border border-secondary  rounded-4">
+                  {flags.map((flag, index) => (
+                    <li
+                      key={index}
+                      onClick={() => i18n.changeLanguage(flag.i18nCode)}
+                    >
+                      <a className="dropdown-item d-flex  align-items-center">
+                        <img
+                          className="h-20px me-3"
+                          src={flag.imgName}
+                          alt=""
+                        />
+                        <p>{t(flag.name)}</p>
+                      </a>
+                    </li>
+                  ))}
+                </ul>
               </li>
               <li className="flex-grow-1 d-flex justify-content-around align-items-center">
                 <div
@@ -209,7 +333,7 @@ export default function Navbar({
                     data-bs-toggle="modal"
                     data-bs-target="#registerModal"
                   >
-                    <p>Register</p>
+                    <p>{t("register")}</p>
                   </button>
                   <div
                     className="modal fade"
@@ -225,7 +349,7 @@ export default function Navbar({
                             <Logo theme={theme} setTheme={setTheme}></Logo>
                           </div>
                           <h3 className="center-div fst-italic py-2">
-                            Register
+                            {t("register")}
                           </h3>
                           <DotLottieReact
                             src="https://lottie.host/d1bdc022-e4d8-40fe-9904-fbe0265d41a0/druqOOEkd4.json"
@@ -240,7 +364,7 @@ export default function Navbar({
                               value={registrationFormData.name}
                               onChange={handleChange}
                               className="border custom-border w-100 h-50px rounded-4 my-2 p-2 px-3"
-                              placeholder="Enter your name"
+                              placeholder={t("namePlaceholder")}
                             />
                             <input
                               type="text"
@@ -248,7 +372,7 @@ export default function Navbar({
                               value={registrationFormData.email}
                               onChange={handleChange}
                               className="border custom-border w-100 h-50px rounded-4 my-2 p-2 px-3"
-                              placeholder="Enter your email"
+                              placeholder={t("emailPlaceholder")}
                             />
                             <input
                               value={registrationFormData.mobile}
@@ -259,7 +383,7 @@ export default function Navbar({
                               type="tel"
                               name="mobile"
                               className="border custom-border w-100 h-50px rounded-4 my-2 p-2 px-3"
-                              placeholder="Enter your number"
+                              placeholder={t("numberPlaceholder")}
                             />
                             <p
                               className="text-danger px-3"
@@ -279,7 +403,7 @@ export default function Navbar({
                                 type={showPassword ? "text" : "password"}
                                 name="password"
                                 className="flex-grow-1"
-                                placeholder="Enter your password"
+                                placeholder={t("passwordPlaceholder")}
                                 value={registrationFormData.password}
                               />
                               <p
@@ -301,8 +425,9 @@ export default function Navbar({
                               type="text"
                               name="refferalcode"
                               className="border custom-border w-100 h-50px rounded-4 my-2 p-2 px-3"
-                              placeholder="Enter your refferal code (Optional)"
+                              placeholder={t("refferalPlaceholder")}
                               value={registrationFormData.referralcode}
+                              onChange={handleChange}
                             />
                             <div className="center-div">
                               <button
@@ -310,18 +435,14 @@ export default function Navbar({
                                 data-bs-dismiss="modal"
                                 className=" outline-0 border-0 bg-teal text-white rounded-4 px-3 p-2 my-3"
                               >
-                                Register now
+                                {t("registerNow")}
                               </button>
                             </div>
                           </form>
                           <div className="d-flex justify-content-center my-3">
-                            already have an account?{" "}
-                            <p
-                              className="color-teal ms-2"
-                              
-                              typeof="button"
-                            >
-                              Login
+                            {t("alreadyHaveAccount")}
+                            <p className="color-teal ms-2" typeof="button">
+                              {t("login")}
                             </p>
                           </div>
                         </div>
@@ -354,8 +475,8 @@ export default function Navbar({
                   className="p-3 position-fixed"
                 >
                   <Toast
-                    show={isLogin}
-                    onClose={() => setIsLoginCreated(false)}
+                    show={showToast}
+                    onClose={() => setShowToast(false)}
                     delay={3000}
                     autohide
                     className={toastBg}
@@ -378,20 +499,21 @@ export default function Navbar({
                     type="button"
                     onClick={() => setOpenLoginModal(true)}
                   >
-                    <p>Login</p>
+                    <p>{t("login")}</p>
                   </button>
                   <Modal
                     show={openLoginModal}
                     onHide={() => setOpenLoginModal(false)}
                     centered
-                    
                   >
                     <Modal.Body className={`p-4 rounded-3 pt-5 ${theme}`}>
                       <div className="center-div">
                         <Logo theme={theme} setTheme={setTheme}></Logo>
                       </div>
 
-                      <h3 className="center-div fst-italic py-2">Login</h3>
+                      <h3 className="center-div fst-italic py-2">
+                        {t("login")}
+                      </h3>
 
                       <DotLottieReact
                         src="https://lottie.host/14273cfb-afce-4097-97ba-e66ec31c8b2b/jkgwm3q4Hl.json"
@@ -410,7 +532,7 @@ export default function Navbar({
                             checkMobileNumberLength(e);
                           }}
                           className="border custom-border w-100 h-50px rounded-4 my-2 p-2 px-3"
-                          placeholder="Enter your phone number"
+                          placeholder={t("numberPlaceholder")}
                         />
 
                         <p
@@ -432,7 +554,7 @@ export default function Navbar({
                             type={showPassword ? "text" : "password"}
                             name="password"
                             className="flex-grow-1"
-                            placeholder="Enter your password"
+                            placeholder={t("passwordPlaceholder")}
                           />
 
                           <p
@@ -457,20 +579,20 @@ export default function Navbar({
                             type="submit"
                             className="border-0 text-white bg-teal rounded-4 px-3 p-2 my-3"
                           >
-                            Login now
+                            {t("loginNow")}
                           </button>
                         </div>
                       </form>
 
                       <div className="d-flex justify-content-center my-3">
-                        Do not have an account ?
+                        {t("donotHaveAccount")}
                         <p
                           className="ms-2 color-teal"
                           onClick={() => {
                             setOpenLoginModal(false);
                           }}
                         >
-                          Register
+                          {t("register")}
                         </p>
                       </div>
                     </Modal.Body>
@@ -481,7 +603,7 @@ export default function Navbar({
                   style={{ display: isToken ? "flex" : "none" }}
                 >
                   <a
-                    href="/profile"
+                    onClick={() => navigate("/profile")}
                     className="ms-5 profile-icon rounded-circle bg-teal center-div"
                   >
                     <img className="h-50" src="../images/profile.png" alt="" />
@@ -503,7 +625,7 @@ export default function Navbar({
                       alt="menu"
                     />
                   </button>
-                  <ul className="dropdown-menu dropdown-menu-end rounded-4">
+                  <ul className="dropdown-menu border border-secondary dropdown-menu-end rounded-4">
                     <li>
                       <button className="dropdown-item d-flex  align-items-center justify-content-between">
                         <div className="d-flex">
@@ -516,13 +638,12 @@ export default function Navbar({
                             }
                             alt=""
                           />
-                          <p>Dark Theme</p>
+                          <p>{t("theme")}</p>
                         </div>
                         <div>
                           <div className="form-check form-switch">
                             <input
                               className="form-check-input"
-                              value="light"
                               name="theme"
                               type="checkbox"
                               role="switch"
@@ -536,11 +657,110 @@ export default function Navbar({
                         </div>
                       </button>
                     </li>
-                    <li className="d-lg-none d-md-none d-sm-block">
-                      <NavbarItems
-                        theme={theme}
-                        setTheme={setTheme}
-                      ></NavbarItems>
+                    <li className="d-lg-none">
+                      <button
+                        type="button"
+                        className="dropdown-item d-flex justify-content-between align-items-center"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setShowDownload(!showDownload);
+                        }}
+                      >
+                        <div className="d-flex -align-items-center">
+                          <img
+                            className="h-20px"
+                            src={
+                              theme == "light"
+                                ? "../images/download.png"
+                                : "../images/download-white.png"
+                            }
+                          />
+                          <p className="ms-3">{t("download")}</p>
+                        </div>
+                        <p className="text-secondary">
+                          {showDownload ? "hide" : "show"}
+                        </p>
+                      </button>
+
+                      {showDownload && (
+                        <div className="row g-0 h-100 w-100 p-3">
+                          <div className="col-6 h-100 d-flex flex-column p-2  justify-content-center">
+                            <p className="mb-2 center-div">{t("download")}</p>
+                            <div className="d-flex flex-column justify-content-between h-60">
+                              <img
+                                className="h-30px w-100"
+                                src="../images/as.png"
+                                alt=""
+                              />
+                              <img
+                                className="h-30px w-100"
+                                src="../images/ps.png"
+                                alt=""
+                              />
+                            </div>
+                          </div>
+                          <div className="col-6 d-flex flex-column p-2  justify-content-center">
+                            <p className="mb-2 center-div">{t("scan")}</p>
+                            <img
+                              className="h-60"
+                              src="../images/dummyQR.png"
+                              alt="download"
+                            />
+                          </div>
+                        </div>
+                      )}
+                    </li>
+                    <li className="d-lg-none">
+                      <button
+                        type="button"
+                        className="dropdown-item d-flex justify-content-between align-items-center"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setShowLanguages(!showLanguages);
+                        }}
+                      >
+                        <div className="d-flex -align-items-center">
+                          <img
+                            className="h-20px"
+                            src={
+                              theme == "light"
+                                ? "../images/earth.png"
+                                : "../images/earth-white.png"
+                            }
+                          />
+                          <p className="ms-3">{t("languages")}</p>
+                        </div>
+                        <p className="text-secondary">
+                          {showLanguages ? "hide" : "show"}
+                        </p>
+                      </button>
+
+                      {showLanguages && (
+                        <div className="row g-0 h-100 w-100 p-3">
+                          <ul>
+                            {flags.map((flag, index) => (
+                              <li
+                                key={index}
+                                onClick={() =>
+                                  i18n.changeLanguage(flag.i18nCode)
+                                }
+                              >
+                                <a
+                                  className="dropdown-item d-flex  align-items-center"
+                                  href="#"
+                                >
+                                  <img
+                                    className="h-20px me-3"
+                                    src={flag.imgName}
+                                    alt=""
+                                  />
+                                  <p>{flag.name}</p>
+                                </a>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
                     </li>
                     <li>
                       <a
@@ -556,7 +776,7 @@ export default function Navbar({
                           }
                           alt=""
                         />
-                        <p>Privacy Policy</p>
+                        <p>{t("privacy")}</p>
                       </a>
                     </li>
                     <li>
@@ -573,7 +793,7 @@ export default function Navbar({
                           }
                           alt=""
                         />
-                        <p>Terms & Conditions</p>
+                        <p>{t("terms")}</p>
                       </a>
                     </li>
                     <li>
@@ -590,7 +810,7 @@ export default function Navbar({
                           }
                           alt=""
                         />
-                        <p>Contact Us</p>
+                        <p>{t("contact")}</p>
                       </a>
                     </li>
                     <li>
@@ -607,7 +827,7 @@ export default function Navbar({
                           }
                           alt=""
                         />
-                        <p>Cancellation Policy</p>
+                        <p>{t("cancellation")}</p>
                       </a>
                     </li>
                     <li>
@@ -647,7 +867,10 @@ export default function Navbar({
                           >
                             Yes
                           </button>
-                          <button className="bg-teal text-white border-0 p-2 px-3 rounded-3">
+                          <button
+                            data-bs-dismiss="modal"
+                            className="bg-teal text-white border-0 p-2 px-3 rounded-3"
+                          >
                             No
                           </button>
                         </div>

@@ -3,6 +3,8 @@ import "swiper/css";
 import "swiper/css/autoplay";
 import { Autoplay } from "swiper/modules";
 import "./AddsCarousel.css";
+import { useTranslation } from "react-i18next";
+
 class carouselSlides {
   constructor(heading, description, bgColor, fontBtnColor) {
     this.heading = heading;
@@ -12,40 +14,41 @@ class carouselSlides {
   }
 }
 export default function AddsCarousel({theme,setTheme}) {
+   const { t ,i18n } = useTranslation();
   const slides = [
     new carouselSlides(
-      "Travel Made Easy",
-      "Book buses quickly with a smooth and hassle-free experience across multiple destinations.",
+      "card1Heading",
+      "card1Description",
       "#ede8fc",
       "#4f29d2",
     ),
     new carouselSlides(
-      "Fastest Booking",
-      "Reserve your seats instantly in just a few clicks with our lightning-fast booking system.",
+      "card2Heading",
+      "card2Description",
       "#feefef",
       "#fd5351",
     ),
     new carouselSlides(
-      "Best Deals & Discounts",
-      "Unlock exclusive offers, cashback rewards, and exciting discounts on every journey.",
+      "card3Heading",
+      "card3Description",
       "#edf9f1",
       "#02a66a",
     ),
     new carouselSlides(
-      "Secure Payments",
-      "Enjoy 100% safe and encrypted transactions with trusted payment gateways.",
+      "card4Heading",
+      "card4Description",
       "#f0f6fe",
       "#0966ee",
     ),
     new carouselSlides(
-      "Wide Network",
-      "Travel across cities seamlessly with our extensive network of premium bus operators.",
+      "card5Heading",
+      "card5Description",
       "#fef3e5",
       "#fd9104",
     ),
     new carouselSlides(
-      "24/7 Customer Support",
-      "Our dedicated support team is always available to assist you anytime, anywhere.",
+      "card6Heading",
+      "card6Description",
       "#f2effc",
       "#6240e2",
     ),
@@ -54,10 +57,10 @@ export default function AddsCarousel({theme,setTheme}) {
     <div className={`container-fluid g-0 pb-5 text-center after-search-card-div ${theme}`} >
       <div className="px-5 py-5">
         <h1 className="fw-bold fst-italic">
-          Enjoy your travel experience with us
+          {t("carouselHeading1")}
         </h1>
         <h5 className="py-2 fst-italic">
-          Book your adventure, pack your bags and let the exploration begin
+          {t("carouselHeading2")}
         </h5>
       </div>
       <div className="px-4 text-black">
@@ -93,14 +96,14 @@ export default function AddsCarousel({theme,setTheme}) {
               >
                 <div className="col-7 d-flex flex-column justify-content-around align-items-center">
                   <h5 className="fw-bold fst-italic text-center">
-                    {item.heading}
+                    {t(item.heading)}
                   </h5>
-                  <p>{item.description}</p>
+                  <p>{t(item.description)}</p>
                   <button
                     className="btn rounded-pill d-flex center-div p-2 px-4"
                     style={{ background: item.fontBtnColor }}
                   >
-                    <p className="text-white fw-bold">View Bus</p>
+                    <p className="text-white fw-bold">{t("viewbus")}</p>
                     <img
                       className="h-20px mx-3"
                       src="../images/arrow-right.png"
