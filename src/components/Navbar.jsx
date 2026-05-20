@@ -276,7 +276,7 @@ export default function Navbar({
                       <p className="mb-2 center-div">{t("scan")}</p>
                       <img
                         className="h-60"
-                        src="../images/dummyQR.png"
+                        src="../images/busify-QR.png"
                         alt="download"
                       />
                     </div>
@@ -703,7 +703,7 @@ export default function Navbar({
                             <p className="mb-2 center-div">{t("scan")}</p>
                             <img
                               className="h-60"
-                              src="../images/dummyQR.png"
+                              src="../images/busify-QR.png"
                               alt="download"
                             />
                           </div>
