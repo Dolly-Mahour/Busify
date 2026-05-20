@@ -34,7 +34,10 @@ export default function SearchCard({
     });
   };
   async function searchBusTrip(e) {
-    if (isUserLoggedIn) {
+     e.preventDefault();
+
+    const token  = localStorage.getItem("token");
+    if (token) {
       if (
         searchFormData.date == "" ||
         searchFormData.to == "" ||
@@ -46,7 +49,7 @@ export default function SearchCard({
       } else {
         try {
           const response = await fetch(
-            "http://localhost:5000/api/bustrips/searchtrips",
+            "https://busprojectapis.onrender.com/api/bustrips/searchtrips",
             {
               method: "POST",
 
@@ -66,6 +69,7 @@ export default function SearchCard({
         }
       }
     } else {
+      // e.stopPropagation()
       setOpenLoginModal(true);
     }
   }
