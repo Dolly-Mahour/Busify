@@ -1,18 +1,113 @@
-# React + Vite
+# Busify
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Busify is a full-stack bus booking web application built using React.js, Node.js, Express.js, and MongoDB.
 
-Currently, two official plugins are available:
+The application provides an end-to-end booking flow with user authentication, multilingual support, dynamic theme switching, and responsive UI.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Live Demo
 
-## React Compiler
+https://busify-app.vercel.app/
 
-The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
+---
 
-Note: This will impact Vite dev & build performances.
+## Features
 
-## Expanding the ESLint configuration
+* User registration and login
+* Bus search and booking flow
+* Seat selection system
+* Multilingual support
+* Light and dark theme
+* REST API integration
+* Responsive design
+* Production deployment
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+---
+
+## Tech Stack
+
+### Frontend
+
+* React.js
+* React Router
+* Bootstrap / CSS
+* Axios
+
+### Backend
+
+* Node.js
+* Express.js
+* MongoDB
+* JWT Authentication
+
+### Deployment
+
+* Vercel
+* Render
+
+---
+
+## Project Structure
+
+```bash id="kkd13g"
+Frontend → React.js
+Backend → Node.js + Express.js
+Database → MongoDB
+Authentication → JWT
+```
+
+---
+
+## Screenshots
+
+(Add project screenshots here)
+
+---
+
+## Installation
+
+### Clone Repository
+
+```bash id="k3hvbt"
+git clone https://github.com/Dolly-Mahour/Busify.git
+```
+
+### Frontend
+
+```bash id="6phm1r"
+cd frontend
+npm install
+npm run dev
+```
+
+### Backend
+
+```bash id="n9r1m2"
+cd backend
+npm install
+npm start
+```
+
+---
+
+## What I Learned
+
+While building this project, I improved my understanding of:
+
+* Full-stack application architecture
+* REST API development
+* Authentication and protected routes
+* MongoDB integration
+* Deployment workflow
+* Responsive frontend development
+
+---
+
+## Author
+
+Dolly Mahour
+
+Portfolio: https://dolly-mahour-portfolio.vercel.app/
+
+GitHub: https://github.com/Dolly-Mahour
+
+LinkedIn: https://linkedin.com/in/dolly-mahour-74ab3732b/
