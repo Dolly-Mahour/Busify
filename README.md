@@ -59,8 +59,8 @@ Authentication → JWT
 
 ## Screenshots
 
-(Add project screenshots here)
-
+[Home Page Light Theme](../screenshots/lightTheme.png)
+[Home Page Dark Theme](../screenshots/darkTheme.png)
 ---
 
 ## Installation
